@@ -21,7 +21,7 @@ import time
 import urllib.request
 from datetime import date
 from urllib.error import URLError
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urljoin
 from urllib.robotparser import RobotFileParser
 
 from playwright.sync_api import Error as PlaywrightError
@@ -105,8 +105,8 @@ def scrape_all(parser: RobotFileParser) -> list[dict[str, str]]:
     screenshot_path = f"quotes_{date.today().strftime('%Y%m%d')}.png"
 
     with sync_playwright() as playwright:
-        # headless=False で画面にブラウザを表示して実行する
-        browser = playwright.chromium.launch(headless=False)
+        # headless=True でブラウザを画面に表示せずに実行する
+        browser = playwright.chromium.launch(headless=True)
         context = browser.new_context(user_agent=USER_AGENT)
         page = context.new_page()
         page.set_default_navigation_timeout(NAV_TIMEOUT)
